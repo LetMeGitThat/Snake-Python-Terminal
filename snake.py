@@ -75,9 +75,14 @@ def show_display():
         print(buffer)
 
 def place_apple():
-    x = random.randint(0, BOARD_WIDTH-1)
-    y = random.randint(0, BOARD_HEIGHT-1)
-    position = (x, y)
+    while True:
+        x = random.randint(1, BOARD_WIDTH-2)
+        y = random.randint(1, BOARD_HEIGHT-2)
+        position = (x, y)
+        for tail in snake:
+            if tail[0] == x and tail[1] == y:
+                continue
+        break
     return position
 
 def self_collision():
@@ -118,7 +123,4 @@ def start():
         os.system("cls")
     print("Game Over, you scored: " + str(score))
         
-        
-        
-
 start()
