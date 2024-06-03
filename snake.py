@@ -6,7 +6,7 @@ import threading
 
 BOARD_WIDTH = 10
 BOARD_HEIGHT = 10
-UPDATE_SPEED = 0.1
+UPDATE_SPEED = 0.2
 
 SNAKE_CHARACTER = "S"
 APPLE_CHARACTER = "O"
@@ -23,19 +23,20 @@ def input():
     # handle input
     global xVel
     global yVel
+    global running
 
     while True:
         key = keyboard.read_key()
-        if key == "w":
+        if key == "w" and yVel != 1:
             yVel = -1
             xVel = 0
-        if key == "a":
+        if key == "a" and xVel != 1:
             yVel = 0
             xVel = -1
-        if key == "s":
+        if key == "s" and yVel != -1:
             yVel = 1
             xVel = 0
-        if key == "d":
+        if key == "d" and xVel != -1:
             yVel = 0
             xVel = 1
         if key == "q":
@@ -77,6 +78,13 @@ def place_apple():
     position = (x, y)
     return position
 
+def self_collision():
+    first = True
+
+    for tail in snake:
+        if not first and snake[0][0] == tail[0] and snake[0][1] == tail[1]:
+            return True
+        first = False
 
 def start():
     global display
@@ -84,14 +92,21 @@ def start():
     inputThread = threading.Thread(target=input)
     inputThread.start()
 
+    score = 0
+
     applePosition = place_apple()
 
     while running:
         if snake[0][0] == applePosition[0] and snake[0][1] == applePosition[1]:
+            score += 1
             grow = True
             applePosition = place_apple()
         
         update_snake()
+        selfCollision = self_collision()
+
+        if selfCollision:
+            break
         update_display(applePosition)
         show_display()
 
@@ -99,6 +114,7 @@ def start():
 
         display = [[" " for _ in range(BOARD_WIDTH)] for _ in range(BOARD_HEIGHT)]
         os.system("cls")
+    print("Game Over, you scored: " + str(score))
         
         
         
