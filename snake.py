@@ -29,7 +29,6 @@ def input():
     global yVel
 
     while True:
-        print(xVel, yVel)
         key = keyboard.read_key()
         if key == "w":
             yVel = -1
@@ -38,7 +37,6 @@ def input():
             yVel = 0
             xVel = -1
         if key == "s":
-            print("going down")
             yVel = 1
             xVel = 0
         if key == "d":
@@ -50,7 +48,6 @@ def input():
 
 def update_snake():
     # add an element to the first position where the head should be and pop the table
-    print(xVel, yVel)
     position = (snake[0][0]+xVel, snake[0][1]+yVel)
     if position[0] >= BOARD_WIDTH or position[1] >= BOARD_HEIGHT or position[0] < 0 or position[1] < 0:
         print("player has hit a wall end it") 
