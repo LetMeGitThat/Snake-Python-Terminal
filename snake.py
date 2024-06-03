@@ -4,8 +4,8 @@ import time
 import keyboard
 import threading
 
-BOARD_WIDTH = 5
-BOARD_HEIGHT = 5
+BOARD_WIDTH = 10
+BOARD_HEIGHT = 10
 
 snakeCharacter = "S"
 appleCharacter = "O"
@@ -14,11 +14,16 @@ snake = [(0, 2)]
 xVel = 1
 yVel = 0
 display = [
-    ["0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0"],
-    ["0", "0", "0", "0", "0"]
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
+    ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]
 ]
 
 updateSnake = False
@@ -59,9 +64,9 @@ def update_display():
         display[position[1]][position[0]] = snakeCharacter
 
 def show_display():
-    for j in range(5):
+    for j in range(BOARD_HEIGHT):
         buffer = ""
-        for i in range(5):
+        for i in range(BOARD_WIDTH):
             buffer += display[j][i]
         print(buffer)
 
@@ -74,6 +79,7 @@ def main():
         update_display()
         show_display()
         time.sleep(.5)
+        os.system("cls")
         
 
 main()
