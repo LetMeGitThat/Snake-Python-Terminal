@@ -4,7 +4,7 @@ import time
 import keyboard
 import threading
 
-BOARD_WIDTH = 10
+BOARD_WIDTH = 25
 BOARD_HEIGHT = 10
 UPDATE_SPEED = 0.2
 
@@ -14,7 +14,7 @@ APPLE_CHARACTER = "O"
 snake = [(0, 2)]
 xVel = 1
 yVel = 0
-display = [[" " for _ in range(BOARD_WIDTH)] for _ in range(BOARD_HEIGHT)]
+display = [["#" if x == 0 or x == BOARD_WIDTH - 1 or y == 0 or y == BOARD_HEIGHT - 1 else " " for x in range(BOARD_WIDTH)] for y in range(BOARD_HEIGHT)]
 
 grow = False
 running = True
@@ -45,10 +45,12 @@ def input():
 
 def update_snake():
     global grow
+    global running
     # add an element to the first position where the head should be and pop the table
     position = (snake[0][0]+xVel, snake[0][1]+yVel)
-    if position[0] >= BOARD_WIDTH or position[1] >= BOARD_HEIGHT or position[0] < 0 or position[1] < 0:
-        return False
+    if position[0] > BOARD_WIDTH - 2 or position[1] > BOARD_HEIGHT - 2 or position[0] < 1 or position[1] < 1:
+        running = False
+        return
     snake.insert(0, position)
 
     # do not pop if we eat an apple
@@ -112,7 +114,7 @@ def start():
 
         time.sleep(UPDATE_SPEED)
 
-        display = [[" " for _ in range(BOARD_WIDTH)] for _ in range(BOARD_HEIGHT)]
+        display = [["#" if x == 0 or x == BOARD_WIDTH - 1 or y == 0 or y == BOARD_HEIGHT - 1 else " " for x in range(BOARD_WIDTH)] for y in range(BOARD_HEIGHT)]
         os.system("cls")
     print("Game Over, you scored: " + str(score))
         
