@@ -26,6 +26,9 @@ def input():
     global running
 
     while True:
+        if not running:
+            break
+
         key = keyboard.read_key()
         if key == "w" and yVel != 1:
             yVel = -1
